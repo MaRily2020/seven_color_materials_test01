@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 void main() {
+  debugPaintSizeEnabled = true;
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  var _countD=0;
-  var _countL=0;
-  var _countS=0;
-  var _countT=0;
 
   // This widget is the root of your application.
   @override
@@ -29,7 +27,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const ProgressionViewer(),
     );
   }
 }
@@ -40,43 +39,76 @@ class ProgressionViewer extends StatefulWidget{
   State<ProgressionViewer> createState() => _ProgressionViewerState();
 }
 class _ProgressionViewerState extends State<ProgressionViewer> {
+  var _countD=0;
+  var _countL=0;
+  var _countS=0;
+  var _countT=0;
   @override
   Widget build(BuildContext context) {
     int bar = 0;
     var bars =[];
+    var items = [
+      _DLSTBlocks(),
+      _DLSTBlocks(),
+      _DLSTBlocks(),
+      _DLSTBlocks(),
+      _DLSTBlocks(),
+    ];
     return Scaffold(
         appBar: AppBar(
           title: Text("Viewer"),
         ),
-        body: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-            ),
-            itemBuilder: (BuildContext context, int index) {
-              if (index >= bars.length) {
-                bars.addAll(["pic0", "pic1", "pic2", "pic3", "pic4", "pic5",]);
-              }
-              return _DLSTBlocks(context);
-            }
+        /*
+        body: GridView.count(
+            crossAxisCount: 8,
+            scrollDirection: Axis.horizontal,
+            children: items
         )
-    );
-  }
-  Widget _DLSTBlocks(BuildContext context) {
-    return Container(
-      child:Center(
-        child:Column(
-          children: <Widget>[
-            Container(width:100, height:100, color:Colors.orange),
-            Container(width:100, height:100, color:Colors.yellow),
-            Container(width:100, height:100, color:Colors.lightBlueAccent),
-            Container(width:100, height:100, color:Colors.grey),
+        */
+
+        body:
+        GridView.count(
+          crossAxisCount: 2,
+          childAspectRatio: 0.25,
+          //scrollDirection: Axis.horizontal,
+          children: [
+            _DLSTBlocks(),
+            GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1,
+                ),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, int index) {
+                  if (index >= bars.length) {
+                    bars.addAll(["pic0", "pic1", "pic2", "pic3", "pic4", "pic5",]);
+                  }
+                  return _DLSTBlocks();
+                }
+            )
           ]
         )
-      )
+
+    );
+  }
+  Widget _DLSTBlocks() {
+    return Container(
+      color: Colors.deepPurpleAccent,
+        width: 100.0,
+        height: 100.0,
+      //child:Center(
+        child:Column(
+          children: <Widget>[
+            Container(width:20, height:20, color:Colors.orange),
+            Container(width:20, height:20, color:Colors.yellow),
+            Container(width:20, height:20, color:Colors.lightBlueAccent),
+            Container(width:20, height:20, color:Colors.grey),
+          ]
+        )
+      //)
     );
   }
 }
-
+/*
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
@@ -161,3 +193,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+*/
