@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:seven_color_materials_test01/Model/progress_timeline.dart';
 
 class ProgressionViewer2 extends StatefulWidget{
   const ProgressionViewer2({Key? key}) : super(key: key);
@@ -11,7 +12,6 @@ class ProgressionViewer2 extends StatefulWidget{
 class _ProgressionViewerState2 extends State<ProgressionViewer2> {
   @override
   Widget build(BuildContext context) {
-    int bar = 0;
     var bars =[];
     /*
     var items = [
@@ -92,11 +92,8 @@ class ProgressionViewer extends StatefulWidget{
   State<ProgressionViewer> createState() => _ProgressionViewerState();
 }
 class _ProgressionViewerState extends State<ProgressionViewer> {
-  var _countD=0;
-  var _countL=0;
-  var _countS=0;
-  var _countT=0;
   bool chckSwitch=true;
+  final ProgressTimeline _timeline = ProgressTimeline(beats:4,bars:16);
 
   void _handlePressed() {
     setState(() {
@@ -129,10 +126,13 @@ class _ProgressionViewerState extends State<ProgressionViewer> {
                   child: Row(
                     children: [
                       Container(
-                          color: Colors.deepPurpleAccent,
                           //width: 52.0,
                           //height: 300.0,
                           //child:Center(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Color.fromARGB(120, 30, 30, 30)),
+                            color: Colors.white,
+                          ),
                           child:Column(
                               children: <Widget>[
                                 Container(
@@ -144,11 +144,11 @@ class _ProgressionViewerState extends State<ProgressionViewer> {
                                 Container(
                                   child:Text("Centor2"),
                                 ),
-                                Container(width:50, height:50, color:Colors.white70),
-                                Container(width:50, height:50, color:Colors.orange),
-                                Container(width:50, height:50, color:Colors.yellow),
-                                Container(width:50, height:50, color:Colors.lightBlueAccent),
-                                Container(width:50, height:50, color:Colors.grey),
+                                Container(width:50, height:50, color:Color.fromARGB(255, 159, 197, 232)),
+                                Container(width:50, height:50, color:Color.fromARGB(255, 255, 229, 153)),
+                                Container(width:50, height:50, color:Color.fromARGB(255, 182, 215, 168)),
+                                Container(width:50, height:50, color:Color.fromARGB(255, 234, 153, 153)),
+                                Container(width:50, height:50, color:Color.fromARGB(255, 180, 167, 214)),
                               ]
                           )
                         //)
@@ -160,7 +160,9 @@ class _ProgressionViewerState extends State<ProgressionViewer> {
                             scrollDirection: Axis.horizontal,
                             itemCount: 600,
                             itemBuilder: (BuildContext context, int index) {
-                              return _DLSTBlocks();
+                              _timeline.add(index+1, beatCount: 4);
+                              //_timeline.add(index+1);
+                              return _barsBlock(index+1);
                             }
                         ),
                       )
@@ -183,31 +185,133 @@ class _ProgressionViewerState extends State<ProgressionViewer> {
         )
     );
   }
-  Widget _DLSTBlocks() {
+
+
+  Container _beatBlock(String head,{String center1="",String center2="", bool even=false}){
     return Container(
-        color: Colors.deepPurpleAccent,
+        width: 50.0,
+//        height: 300.0,
+        decoration: even?BoxDecoration(
+          border: const Border(
+              right: const BorderSide(
+                  color: Color.fromARGB(255, 30, 30, 30),
+                  width: 0.5
+              )
+          ),
+          color: Colors.white,
+        ):BoxDecoration(
+          border: const Border(
+              right: const BorderSide(
+                  color: Color.fromARGB(20, 30, 30, 30),
+                  width: 0.01
+              )
+          ),
+        ),
+        //child:Center(
+        child:Column(
+            children: <Widget>[
+              Container(
+                child:Text(head,textAlign: TextAlign.start,),
+                margin: const EdgeInsets.only(left:0),
+              ),
+              Container(
+                child:Text(center1,textAlign: TextAlign.start),
+              ),
+              Container(
+                child:Text(center2,textAlign: TextAlign.start),
+              ),
+              Container(width:even?49.5:50, height:50, color:Color.fromARGB(255, 207, 226, 243)),
+              Container(width:even?49.5:50, height:50, color:Color.fromARGB(255, 255, 242, 204)),
+              Container(width:even?49.5:50, height:50, color:Color.fromARGB(255, 217, 234, 211)),
+              Container(width:even?49.5:50, height:50, color:Color.fromARGB(255, 244, 204, 204)),
+              Container(width:even?49.5:50, height:50, color:Color.fromARGB(255, 217, 210, 233)),
+            ]
+        )
+      //)
+    );
+  }
+
+  Widget _barsBlock(int index){
+    final ctnList = <Container>[];
+    final bar = _timeline[index];
+    if(bar == null)throw ArgumentError("指定された小節がありません：${index}");
+    double w = bar.length*50;
+    for(int i = 1; i <= bar.length; i++){
+      String str = "${index}:${i}";
+      Container c = _beatBlock(str,even:(i%2==0));
+      ctnList.add(c);
+    }
+    return Container(
+        width: w+1,
+        //height: 301.0,
+        //child:Center(
+        child:Row(
+          children: ctnList
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: Color.fromARGB(120, 30, 30, 30),width: 0.5),
+          color: Colors.white,
+        ),
+    );
+  }
+  /*
+
+  Widget _Blocks2(String head,{String head1="",String head2=""}){
+    return Container(
+        color: Colors.white,
         width: 52.0,
         height: 300.0,
         //child:Center(
         child:Column(
             children: <Widget>[
               Container(
-                child:Text("Bar"),
+                child:Text(head),
               ),
               Container(
-                child:Text("Centor1"),
+                child:Text(head1),
               ),
               Container(
-                child:Text("Centor2"),
+                child:Text(head2),
               ),
-              Container(width:50, height:50, color:Color.fromARGB(255, 240, 250, 255)),
-              Container(width:50, height:50, color:Color.fromARGB(255, 255, 240, 220)),
-              Container(width:50, height:50, color:Color.fromARGB(255, 240, 240, 210)),
-              Container(width:50, height:50, color:Color.fromARGB(255, 240, 240, 255)),
-              Container(width:50, height:50, color:Color.fromARGB(255, 210, 210, 210)),
+              Container(width:50, height:50, color:Color.fromARGB(255, 207, 226, 243)),
+              Container(width:50, height:50, color:Color.fromARGB(255, 255, 242, 204)),
+              Container(width:50, height:50, color:Color.fromARGB(255, 217, 234, 211)),
+              Container(width:50, height:50, color:Color.fromARGB(255, 244, 204, 204)),
+              Container(width:50, height:50, color:Color.fromARGB(255, 217, 210, 233)),
             ]
         )
       //)
     );
   }
+  Widget _DLSTBlocks(int index, Bar currentBar) {
+    return Container(
+        color: Colors.white,
+        width: 50.0,
+        height: 300.0,
+        //child:Center(
+        child:Column(
+            children: <Widget>[
+              Container(
+                child:Text("${index}:a", textAlign: TextAlign.left),
+                margin: const EdgeInsets.only(left:0),
+              ),
+              Container(
+                child:Text("C", textAlign: TextAlign.left),
+                margin: const EdgeInsets.only(left:0),
+              ),
+              Container(
+                child:Text("F", textAlign: TextAlign.left),
+                margin: const EdgeInsets.only(left:0),
+              ),
+              Container(width:50, height:50, color:Color.fromARGB(255, 207, 226, 243)),
+              Container(width:50, height:50, color:Color.fromARGB(255, 255, 242, 204)),
+              Container(width:50, height:50, color:Color.fromARGB(255, 217, 234, 211)),
+              Container(width:50, height:50, color:Color.fromARGB(255, 244, 204, 204)),
+              Container(width:50, height:50, color:Color.fromARGB(255, 217, 210, 233)),
+            ]
+        )
+      //)
+    );
+  }
+*/
 }
