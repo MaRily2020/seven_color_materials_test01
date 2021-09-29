@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:seven_color_materials_test01/Model/progress_timeline.dart';
+import 'package:seven_color_materials_test01/View/bundle_palette_view.dart';
 
 class ProgressionViewer2 extends StatefulWidget{
   const ProgressionViewer2({Key? key}) : super(key: key);
@@ -85,14 +86,14 @@ class _ProgressionViewerState2 extends State<ProgressionViewer2> {
   }
 }
 
-class ProgressionViewer extends StatefulWidget{
-  const ProgressionViewer({Key? key}) : super(key: key);
+class ProgressionView extends StatefulWidget{
+  const ProgressionView({Key? key}) : super(key: key);
 
   @override
-  State<ProgressionViewer> createState() => _ProgressionViewerState();
+  State<ProgressionView> createState() => _ProgressionViewState();
 }
-class _ProgressionViewerState extends State<ProgressionViewer> {
-  bool chckSwitch=true;
+class _ProgressionViewState extends State<ProgressionView> {
+  bool chckSwitch=false;
   final ProgressTimeline _timeline = ProgressTimeline(beats:4,bars:16);
 
   void _handlePressed() {
@@ -101,9 +102,19 @@ class _ProgressionViewerState extends State<ProgressionViewer> {
     });
   }
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  void _showBottom(){
+    _scaffoldKey.currentState!
+        .showBottomSheet<Null>((BuildContext context) {
+      return BundlePaletteView();
+    }
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           title: Text("Viewer"),
         ),
@@ -117,6 +128,10 @@ class _ProgressionViewerState extends State<ProgressionViewer> {
 
         body:
         Container(
+          margin: EdgeInsets.all(0),
+          padding: EdgeInsets.all(0),
+          color: Colors.green,
+          //width: 410,
           child: Column(
             children: [
               Container(
@@ -171,7 +186,8 @@ class _ProgressionViewerState extends State<ProgressionViewer> {
               ),
 
               ElevatedButton(
-                onPressed: _handlePressed,
+                //onPressed: _handlePressed,
+                onPressed: _showBottom,
                 child: Text(
                   '更新',
                   style: TextStyle(
@@ -179,7 +195,10 @@ class _ProgressionViewerState extends State<ProgressionViewer> {
                       fontSize: 20.0
                   ),
                 ),
-              )
+              ),
+
+
+              //BundlePaletteView()
             ],
           ),
         )
@@ -194,7 +213,7 @@ class _ProgressionViewerState extends State<ProgressionViewer> {
         decoration: even?BoxDecoration(
           border: const Border(
               right: const BorderSide(
-                  color: Color.fromARGB(255, 30, 30, 30),
+                  color: Color.fromARGB(127, 30, 30, 30),
                   width: 0.5
               )
           ),
@@ -224,7 +243,33 @@ class _ProgressionViewerState extends State<ProgressionViewer> {
               Container(width:even?49.5:50, height:50, color:Color.fromARGB(255, 255, 242, 204)),
               Container(width:even?49.5:50, height:50, color:Color.fromARGB(255, 217, 234, 211)),
               Container(width:even?49.5:50, height:50, color:Color.fromARGB(255, 244, 204, 204)),
-              Container(width:even?49.5:50, height:50, color:Color.fromARGB(255, 217, 210, 233)),
+              Container(
+
+                child: GestureDetector(
+                  //onTap: _showBottom,
+                  onTapUp: (details){
+                    details;
+                    _showBottom();
+                  },
+                ),
+                  width:even?49.5:50,
+                  height:50,
+                  color:Color.fromARGB(255, 217, 210, 233),
+                  /*
+                  child:RaisedButton(
+
+                    onPressed: _handlePressed,
+                    color: Colors.blue,
+                    child: const Text(
+                      '更新',
+                      style: TextStyle(
+                          color:Colors.white,
+                          fontSize: 20.0
+                      ),),
+                  )
+
+                   */
+              ),
             ]
         )
       //)

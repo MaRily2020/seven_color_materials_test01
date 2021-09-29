@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'View/progression_viewer.dart';
+import 'View/progression_view.dart';
 
 void main() {
   debugPaintSizeEnabled = true;
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: const ProgressionViewer(),
+      home: const ProgressionView(),
     );
   }
 }
