@@ -168,14 +168,10 @@ class _BundlePaletteViewState extends State<BundlePaletteView>{
                       _createCheckNote(3),
                       _createCheckNote(5),
                       _createCheckNote(7),
-                    ],
-                  ),
-                  Row(
-                    children: [
                       _createCheckNote(2),
                       _createCheckNote(4),
                       _createCheckNote(6),
-                      _createCheckNote(1),
+                      //_createCheckNote(1),
                     ],
                   )
                   /*
