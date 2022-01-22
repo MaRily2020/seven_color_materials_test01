@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/gestures.dart';
+import 'View/transport_timeline_view.dart';
+import 'View/test002_many_wigets.dart';
+import 'View/test01.dart';
 
-import 'View/progression_view.dart';
-
+export 'dart:ui' show Offset;
 void main() {
   debugPaintSizeEnabled = true;
   runApp(const MyApp());
@@ -16,6 +19,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scrollBehavior: MaterialScrollBehavior().copyWith(
+        dragDevices: {PointerDeviceKind.mouse},
+      ),
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -30,7 +36,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: const ProgressionView(),
+      //home: const ProgressionView(),
+      //home: const TransportTimelineView(),
+      home: const ManyWigets(),
     );
   }
 }

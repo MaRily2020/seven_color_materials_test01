@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:seven_color_materials_test01/Model/progress_timeline.dart';
 import 'package:seven_color_materials_test01/View/bundle_palette_view.dart';
+import 'package:seven_color_materials_test01/View/abstract_timeline.dart';
 import 'dart:js' as js;
 
-class ProgressionViewer2 extends StatefulWidget{
-  const ProgressionViewer2({Key? key}) : super(key: key);
+class TransportTimeline extends Timeline{
+  const TransportTimeline({Key? key}) : super(key: key);
 
   @override
-  State<ProgressionViewer2> createState() => _ProgressionViewerState2();
+  State<TransportTimeline> createState() => _TransportTimelineState();
 }
 
 
-class _ProgressionViewerState2 extends State<ProgressionViewer2> {
+class _TransportTimelineState extends State<TransportTimeline> {
   @override
   Widget build(BuildContext context) {
     var bars =[];
@@ -30,10 +31,10 @@ class _ProgressionViewerState2 extends State<ProgressionViewer2> {
           title: Text("Viewer"),
         ),
         body:
-            Container(
-              child: Row(
-                children: [
-                  /*
+        Container(
+            child: Row(
+              children: [
+                /*
                   Container(
                     child:Column(
                       children:<Widget>[
@@ -45,7 +46,7 @@ class _ProgressionViewerState2 extends State<ProgressionViewer2> {
                     )
                   ),
                    */
-                  Container(
+                Container(
                     child:GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 1,
@@ -60,10 +61,10 @@ class _ProgressionViewerState2 extends State<ProgressionViewer2> {
                           return _DLSTBlocks(context);
                         }
                     )
-                  )
-                ],
-              )
+                )
+              ],
             )
+        )
     );
   }
   Widget _DLSTBlocks(BuildContext context) {
@@ -182,9 +183,9 @@ class _ProgressionViewState extends State<ProgressionView> {
                   child: Row(
                     children: [
                       Container(
-                          //width: 52.0,
-                          //height: 300.0,
-                          //child:Center(
+                        //width: 52.0,
+                        //height: 300.0,
+                        //child:Center(
                           decoration: BoxDecoration(
                             border: Border.all(color: Color.fromARGB(120, 30, 30, 30)),
                             color: Colors.white,
@@ -293,10 +294,10 @@ class _ProgressionViewState extends State<ProgressionView> {
                     _showBottom();
                   },
                 ),
-                  width:even?49.5:50,
-                  height:50,
-                  color:Color.fromARGB(255, 217, 210, 233),
-                  /*
+                width:even?49.5:50,
+                height:50,
+                color:Color.fromARGB(255, 217, 210, 233),
+                /*
                   child:RaisedButton(
 
                     onPressed: _handlePressed,
@@ -328,76 +329,16 @@ class _ProgressionViewState extends State<ProgressionView> {
       ctnList.add(c);
     }
     return Container(
-        width: w+1,
-        //height: 301.0,
-        //child:Center(
-        child:Row(
+      width: w+1,
+      //height: 301.0,
+      //child:Center(
+      child:Row(
           children: ctnList
-        ),
-        decoration: BoxDecoration(
-          border: Border.all(color: Color.fromARGB(120, 30, 30, 30),width: 0.5),
-          color: Colors.white,
-        ),
-    );
-  }
-  /*
-
-  Widget _Blocks2(String head,{String head1="",String head2=""}){
-    return Container(
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(color: Color.fromARGB(120, 30, 30, 30),width: 0.5),
         color: Colors.white,
-        width: 52.0,
-        height: 300.0,
-        //child:Center(
-        child:Column(
-            children: <Widget>[
-              Container(
-                child:Text(head),
-              ),
-              Container(
-                child:Text(head1),
-              ),
-              Container(
-                child:Text(head2),
-              ),
-              Container(width:50, height:50, color:Color.fromARGB(255, 207, 226, 243)),
-              Container(width:50, height:50, color:Color.fromARGB(255, 255, 242, 204)),
-              Container(width:50, height:50, color:Color.fromARGB(255, 217, 234, 211)),
-              Container(width:50, height:50, color:Color.fromARGB(255, 244, 204, 204)),
-              Container(width:50, height:50, color:Color.fromARGB(255, 217, 210, 233)),
-            ]
-        )
-      //)
+      ),
     );
   }
-  Widget _DLSTBlocks(int index, Bar currentBar) {
-    return Container(
-        color: Colors.white,
-        width: 50.0,
-        height: 300.0,
-        //child:Center(
-        child:Column(
-            children: <Widget>[
-              Container(
-                child:Text("${index}:a", textAlign: TextAlign.left),
-                margin: const EdgeInsets.only(left:0),
-              ),
-              Container(
-                child:Text("C", textAlign: TextAlign.left),
-                margin: const EdgeInsets.only(left:0),
-              ),
-              Container(
-                child:Text("F", textAlign: TextAlign.left),
-                margin: const EdgeInsets.only(left:0),
-              ),
-              Container(width:50, height:50, color:Color.fromARGB(255, 207, 226, 243)),
-              Container(width:50, height:50, color:Color.fromARGB(255, 255, 242, 204)),
-              Container(width:50, height:50, color:Color.fromARGB(255, 217, 234, 211)),
-              Container(width:50, height:50, color:Color.fromARGB(255, 244, 204, 204)),
-              Container(width:50, height:50, color:Color.fromARGB(255, 217, 210, 233)),
-            ]
-        )
-      //)
-    );
-  }
-*/
 }

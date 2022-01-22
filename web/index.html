@@ -97,5 +97,44 @@
       loadMainDartJs();
     }
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.4.9/Tone.js" type="application/javascript"></script>
+  <script>
+      function playMelody(...melodyList) {
+         console.log( melodyList.length );
+         console.log( melodyList[1] );
+         console.log( melodyList );
+
+         var synth = new Tone.Synth().toDestination();
+         var melody = new Tone.Sequence(setPlay, melodyList).start();
+         Tone.Transport.bpm.value = 70;
+         Tone.Transport.start();
+      }
+      function playChordMelody(...melodyList) {
+
+         console.log( "length"+melodyList.length );
+         console.log( "[0]" + melodyList[0] );
+         console.log( melodyList[0] );
+         console.log( "[1]" + melodyList[0][0] );
+         console.log( melodyList[0][0] );
+         console.log( melodyList );
+
+         var synth = new Tone.PolySynth().toDestination();
+         var melody = new Tone.Part(setPlay, melodyList).start();
+         Tone.Transport.bpm.value = 70;
+         Tone.Transport.start();
+      }
+      function playNote(note, duration) {
+        var synth = new Tone.Synth().toDestination();
+        synth.triggerAttackRelease(note, duration);
+      }
+      function setPlay(time, note) {
+         var synth = new Tone.Synth().toDestination();
+         synth.triggerAttackRelease(note, '8n', time);
+      }
+      function setPlayPoly(time, note) {
+         var synth = new Tone.PolySynth().toDestination();
+         synth.triggerAttackRelease(note, '8n', time);
+      }
+    </script>
 </body>
 </html>
